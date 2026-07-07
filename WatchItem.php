@@ -451,7 +451,15 @@ class WatchItem {
                                 $rRelease = self::parserelease($rFilename, $rParseType);
                                 $rTitle = $rRelease['title'];
                                 if (isset($rRelease['excess'])) {
-                                    $rTitle = trim($rTitle, (is_array($rRelease['excess']) ? $rRelease['excess'][0] : $rRelease['excess']));
+                                    // Strip the excess token as a WHOLE WORD — never
+                                    // trim($title, $excess): its 2nd arg is a char-mask,
+                                    // so trim('Marshals…', 'MULTI') eats the leading 'M'
+                                    // and yields 'arshals…', breaking the TMDb search.
+                                    $rExcess = is_array($rRelease['excess']) ? ($rRelease['excess'][0] ?? '') : $rRelease['excess'];
+                                    if ($rExcess !== '') {
+                                        $rTitle = preg_replace('/\b' . preg_quote((string) $rExcess, '/') . '\b/u', ' ', $rTitle);
+                                        $rTitle = trim(preg_replace('/\s+/u', ' ', $rTitle));
+                                    }
                                 }
                                 if (isset($rRelease['group'])) {
                                     $rAltTitle = $rTitle . '-' . $rRelease['group'];
