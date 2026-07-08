@@ -14,7 +14,7 @@
     "priority": 0,
     "update": {
         "source": "git",
-        "repository": "https://github.com/Vateron-Media/Module_Watch",
+        "repository": "https://github.com/Vateron-Media/Module_Watchfolder",
         "channel": "stable"
     }
 }
