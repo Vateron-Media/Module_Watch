@@ -13,6 +13,7 @@ release: clean
 	  --exclude=./.github \
 	  --exclude=./Makefile \
 	  --exclude=./README.md \
+	  --exclude=./RELEASE.md \
 	  --exclude=./LICENSE \
 	  --exclude=./.gitignore \
 	  -czf "$$tmp" -C . . && mv "$$tmp" $(MODULE_TAR)
